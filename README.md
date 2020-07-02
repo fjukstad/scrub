@@ -17,7 +17,7 @@ traverse any folder and remove all `bin` and `obj` folders it encounters.
 
 ## Example
 
-```
+```sh
 bjorn:/mnt/c/src/scrub$ scrub
 Should I remove '/mnt/c/src/scrub/bin'? y/n
 y
@@ -29,7 +29,7 @@ Removing '/mnt/c/src/scrub/obj'
 
 You can skip user interaction by running `scrub` with `--ask false`:
 
-```
+```sh
 bjorn:/mnt/c/src/scrub$ scrub --ask false
 Removing '/mnt/c/src/scrub/bin'
 Removing '/mnt/c/src/scrub/obj'
@@ -37,7 +37,7 @@ Removing '/mnt/c/src/scrub/obj'
 
 You can also point it to where it should scrub await folders with `--path`
 
-```
+```sh
 bjorn:/mnt/c/src$ scrub --path scrub/ --ask false
 Removing '/mnt/c/src/scrub/bin'
 Removing '/mnt/c/src/scrub/obj'
@@ -46,7 +46,7 @@ Removing '/mnt/c/src/scrub/obj'
 If you only want to list out `bin` and `obj` folders that `scrub` finds, run it
 with the `--list` flag:
 
-```
+```sh
 bjorn:/mnt/c/src/scrub$ scrub --list
 '/mnt/c/src/scrub/bin'
 '/mnt/c/src/scrub/obj'
