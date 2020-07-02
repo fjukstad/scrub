@@ -26,7 +26,7 @@ jobs:
       run: dotnet pack -c Release -o out
        
   push:
-    if: ${{ success() }}
+    needs: build_and_pack
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
