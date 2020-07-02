@@ -10,8 +10,6 @@ jobs:
   build_and_pack:
 
     runs-on: ubuntu-latest
-    outputs: 
-      nupkg: out
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -24,11 +22,20 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Pack
       run: dotnet pack -c Release -o out -p:PackageVersion=1.0.0-build${{ github.run_number }}
+    - name: Archive package
+      uses: actions/upload-artifact@v1
+      with:          
+        name: out
+        path: out
        
   push:
     needs: build_and_pack
     runs-on: ubuntu-latest
     steps:
+    - name: Download package
+      uses: actions/download-artifact@v1
+      with:
+        name: out
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
