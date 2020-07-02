@@ -7,35 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build_and_pack:
-
+  publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Pack
-      run: dotnet pack -c Release -o out -p:PackageVersion=1.0.0-build${{ github.run_number }}
-    - name: Archive package
-      uses: actions/upload-artifact@v1
-      with:          
-        name: out
-        path: out
-       
-  push:
-    needs: build_and_pack
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download package
-      uses: actions/download-artifact@v1
-      with:
-        name: out
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -44,5 +18,11 @@ jobs:
         source-url: https://nuget.pkg.github.com/fjukstad/index.json
       env: 
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Pack
+      run: dotnet pack -c Release -o out -p:PackageVersion=1.0.0-build${{ github.run_number }}
     - name: Push generated package to GitHub registry
       run: dotnet nuget push out/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols true
