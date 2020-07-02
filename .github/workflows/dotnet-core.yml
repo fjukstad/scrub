@@ -10,7 +10,8 @@ jobs:
   build_and_pack:
 
     runs-on: ubuntu-latest
-
+    outputs: 
+      nupkg: out
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -25,6 +26,7 @@ jobs:
       run: dotnet pack -c Release -o out
        
   push:
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -33,5 +35,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
         source-url: https://nuget.pkg.github.com/fjukstad/index.json
+      env: 
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Push generated package to GitHub registry
       run: dotnet nuget push out/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --no-symbols true
