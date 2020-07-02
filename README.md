@@ -12,6 +12,15 @@ build artifacts or intermediate files. The difference between `scrub` and
 `dotnet clean` is that `scrub` removes the `bin` or `obj` folders completely,
 not just the build artifacts created by `MSBuild`.
 
+
+# Install
+
+Install `scrub` globally with
+
+```
+dotnet tool install --global scrub
+```
+
 # Usage
 
 Simply run `scrub` in any folder you want to clean out. It will recursively
@@ -60,12 +69,4 @@ with the `--list` flag:
 bjorn:/mnt/c/src/scrub$ scrub --list
 '/mnt/c/src/scrub/bin'
 '/mnt/c/src/scrub/obj'
-```
-
-# Install
-
-Install `scrub` globally with
-
-```
-dotnet tool install --global scrub
 ```
