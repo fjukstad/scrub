@@ -6,7 +6,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>scrub</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
-
+    <RepositoryUrl>https://github.com/fjukstad/scrub</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.CommandLine.DragonFruit" Version="0.3.0-alpha.20303.1" />
