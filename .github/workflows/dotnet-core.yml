@@ -17,9 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/fjukstad/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}  
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Pack
-      run: dotnet pack 
+      run: dotnet pack -c Release -o out 
+    - name: Push generated package to GitHub registry
+      run: dotnet nuget push ./<project>/out/*.nupkg --skip-duplicate --no-symbols true
