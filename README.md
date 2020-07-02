@@ -3,13 +3,14 @@
 
 # scrub
 
-A simple `dotnet` tool for removing `bin` or `obj` folders. Especially
-useful if you are switching between developing on Windows and WSL frequently,
-and you want to quickly clean out any left-over files. The difference between
-`scrub` and
-[`clean`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-clean) is
-that `scrub` removes everything within the `bin` or `obj` folders, not just the
-build artifacts created by `MSBuild`.
+Like [dotnet clean](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-clean)
+but more thorough.
+
+`scrub` is especially useful if you are switching between developing on
+Windows and WSL frequently, and you want to quickly clean out any left-over
+build artifacts or intermediate files. The difference between `scrub` and
+`dotnet clean` is that `scrub` removes the `bin` or `obj` folders completely,
+not just the build artifacts created by `MSBuild`.
 
 # Usage
 
