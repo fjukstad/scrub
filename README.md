@@ -43,6 +43,15 @@ Removing '/mnt/c/src/scrub/bin'
 Removing '/mnt/c/src/scrub/obj'
 ```
 
+If you only want to list out `bin` and `obj` folders that `scrub` finds, run it
+with the `--list` flag:
+
+```
+bjorn:/mnt/c/src/scrub$ scrub --list
+'/mnt/c/src/scrub/bin'
+'/mnt/c/src/scrub/obj'
+```
+
 # Install
 
 Install `scrub` globally with

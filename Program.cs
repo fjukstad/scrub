@@ -17,12 +17,15 @@ namespace scrub
         ///     Ask before removing a folder. Set to `false` to skip any user
         ///     interaction
         /// </param>
-        static void Main(string path = ".", bool ask = true)
+        /// <param name="list">
+        ///     Only print folder names, do not remove anyhing.
+        /// </param>
+        static void Main(string path = ".", bool ask = true, bool list = false)
         {
-            RemoveBinAndObj(path, ask);
+            RemoveBinAndObj(path, ask, list);
         }
 
-        static void RemoveBinAndObj(string path, bool askForPermission)
+        static void RemoveBinAndObj(string path, bool askForPermission, bool list)
         {
             var folders = Directory.EnumerateDirectories(path);
             foreach (var folder in folders)
@@ -30,39 +33,46 @@ namespace scrub
                 var folderInfo = new DirectoryInfo(folder);
                 if (folderInfo.Name == "bin" || folderInfo.Name == "obj")
                 {
-                    var shouldRemoveFolder = false;
-
-                    if (askForPermission)
+                    if (list)
                     {
-                        Console.WriteLine($"Should I remove '{folderInfo.FullName}'? y/n ");
-                        var answer = Console.ReadLine();
-                        if (answer == "y")
+                        Console.WriteLine($"'{folderInfo.FullName}'");
+                    }
+                    else
+                    {
+                        var shouldRemoveFolder = false;
+
+                        if (askForPermission)
                         {
-                            shouldRemoveFolder = true;
+                            Console.WriteLine($"Should I remove '{folderInfo.FullName}'? y/n ");
+                            var answer = Console.ReadLine();
+                            if (answer == "y")
+                            {
+                                shouldRemoveFolder = true;
+                            }
+                            else
+                            {
+                                shouldRemoveFolder = false;
+                            }
                         }
                         else
                         {
-                            shouldRemoveFolder = false;
+                            shouldRemoveFolder = true;
                         }
-                    }
-                    else
-                    {
-                        shouldRemoveFolder = true;
-                    }
 
-                    if (shouldRemoveFolder)
-                    {
-                        Console.WriteLine($"Removing '{folderInfo.FullName}'");
-                        Directory.Delete(folderInfo.FullName, true);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Skipping '{folderInfo.FullName}'");
+                        if (shouldRemoveFolder)
+                        {
+                            Console.WriteLine($"Removing '{folderInfo.FullName}'");
+                            Directory.Delete(folderInfo.FullName, true);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Skipping '{folderInfo.FullName}'");
+                        }
                     }
                 }
                 else
                 {
-                    RemoveBinAndObj(folder, askForPermission);
+                    RemoveBinAndObj(folder, askForPermission, list);
                 }
             }
         }
